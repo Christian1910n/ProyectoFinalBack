@@ -1,4 +1,4 @@
-package com.example.springproyect.app.controller;
+package com.example.cursospring.controller;
 
 import java.util.List;
 import java.util.Optional;import java.util.stream.Collector;
@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import com.example.cursospring.entity.User;
+import com.example.cursospring.repository.UserRepository;
+import com.example.cursospring.service.S3Service;
 import com.example.cursospring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,15 +27,27 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserControler {
 
 	@Autowired
-	private UserService useS;
+	private UserRepository useS;
 
 
+	@Autowired
+	private S3Service s3Service;
 
+	//
+	@GetMapping
+	List<User> getAll(){
+		return useS.findAll()
+				.stream()
+				.peek(user -> user.setImagenUrl(s3Service.getObjectUrl(user.getImagenPath())))
+				.collect(Collectors.toList());
+	}
 	
 	//Create a new user
 	@PostMapping
-	public ResponseEntity<?>create(@RequestBody User user){
-		return ResponseEntity.status(HttpStatus.CREATED).body(useS.save(user));
+	public User create(@RequestBody User user){
+		useS.save(user);
+		user.setImagenUrl(s3Service.getObjectUrl(user.getImagenPath()));
+		return user;
 	}
 	
 	//read an user

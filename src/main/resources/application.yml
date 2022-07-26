@@ -1,17 +1,18 @@
 cloud:
   aws:
     region:
+      static: us-east-1
   stack:
-    auto:false
+    auto: false
   credentials:
-    acces-key:
+    access-key:
     secret-key:
-  loggins:
+  logging:
     level:
       com:
         amazonaws:
           internal:
-            InstanceMetadataServiceResourceFetcher:error
-          utli:
-            Ec2MetadataUtils:error
+            InstanceMetadataServiceResourceFetcher: error
+          util:
+            EC2MetadataUtils: error
 

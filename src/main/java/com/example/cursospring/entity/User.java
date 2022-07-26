@@ -31,7 +31,9 @@ public class User implements Serializable{
 	private Boolean enable;
 
 	private String cedula;
+
 	private  String imagenPath;
+
 	@Transient
 	private  String imagenUrl;
 }
