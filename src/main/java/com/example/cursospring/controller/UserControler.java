@@ -1,14 +1,12 @@
 package com.example.cursospring.controller;
 
 import java.util.List;
-import java.util.Optional;import java.util.stream.Collector;
+import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 import com.example.cursospring.entity.User;
 import com.example.cursospring.repository.UserRepository;
-import com.example.cursospring.service.S3Service;
-import com.example.cursospring.service.UserService;
+import com.example.cursospring.service.UserServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,17 +26,13 @@ public class UserControler {
 
 	@Autowired
 	private UserRepository useS;
-
-
 	@Autowired
-	private S3Service s3Service;
-
-	//
+	private UserServiceImp s3Service;
 	@GetMapping
 	List<User> getAll(){
 		return useS.findAll()
 				.stream()
-				.peek(user -> user.setImagenUrl(s3Service.getObjectUrl(user.getImagenPath())))
+				.peek(user -> user.setImagenUrl(s3Service.getObjectUrl(user.getImagenPath()))).peek(user -> user.setCedulaUrl(s3Service.getObjectUrl(user.getCedulaPath())))
 				.collect(Collectors.toList());
 	}
 	
@@ -47,12 +41,13 @@ public class UserControler {
 	public User create(@RequestBody User user){
 		useS.save(user);
 		user.setImagenUrl(s3Service.getObjectUrl(user.getImagenPath()));
+		user.setCedulaUrl(s3Service.getObjectUrl(user.getCedulaPath()));
 		return user;
 	}
 	
 	//read an user
 	@GetMapping("/{id}")
-	public ResponseEntity<?> read (@PathVariable(value = "id") Long userId){
+	public ResponseEntity<?> read (@PathVariable(value = "id") Integer userId){
 		Optional<User>oUser = useS.findById(userId);
 		
 		if(!oUser.isPresent()) {
@@ -63,7 +58,7 @@ public class UserControler {
 	
 	//Update a user
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@RequestBody User userDetails, @PathVariable(value="id")Long userId){
+	public ResponseEntity<?> update(@RequestBody User userDetails, @PathVariable(value="id")Integer userId){
 		Optional<User> user = useS.findById(userId);
 		
 		if(!user.isPresent()) {
@@ -73,13 +68,14 @@ public class UserControler {
 		user.get().setPassword(userDetails.getPassword());
 		user.get().setEmail(userDetails.getEmail());
 		user.get().setEnable(userDetails.getEnable());
-		
+		user.get().setImagenUrl(s3Service.getObjectUrl(userDetails.getImagenPath()));
+		user.get().setCedulaUrl(s3Service.getObjectUrl(userDetails.getCedulaPath()));
 		return ResponseEntity.status(HttpStatus.CREATED).body(useS.save(user.get()));
 	}
 	
 	//delete user
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> delete(@PathVariable(value="id")Long userId){
+	public ResponseEntity<?> delete(@PathVariable(value="id")Integer userId){
 		if(!useS.findById(userId).isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
@@ -87,12 +83,6 @@ public class UserControler {
 		return ResponseEntity.ok().build();
 	}
 	
-	//read all user
-	@GetMapping
-	public List<User> readAll(){
-		List<User> user = StreamSupport.stream(useS.findAll().spliterator(), false).collect(Collectors.toList());
-		return user;
-	}
-	
+
 	
 }
