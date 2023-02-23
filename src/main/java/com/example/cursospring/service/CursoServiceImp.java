@@ -10,7 +10,6 @@ import com.amazonaws.services.s3.model.*;
 import com.amazonaws.util.IOUtils;
 import com.example.cursospring.entity.User;
 import com.example.cursospring.entity.vm.Asset;
-import com.example.cursospring.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
