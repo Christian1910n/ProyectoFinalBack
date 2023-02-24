@@ -1,4 +1,47 @@
 package com.example.cursospring.controller;
 
+import com.example.cursospring.entity.Cliente;
+import com.example.cursospring.entity.Proveedor;
+import com.example.cursospring.service.ClienteService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@CrossOrigin(origins = {"http://localhost:4200"})
+@RestController
+@RequestMapping("/api")
 public class ClienteController {
+@Autowired
+    private ClienteService clienteService;
+@GetMapping("/listarcliente")
+    public List<Cliente> indext(){
+    return clienteService.findAll();
+}
+    @PostMapping("/crearcliente")
+    public Cliente save(@RequestBody Cliente libro){
+        return clienteService.save(libro);
+    }
+
+    @GetMapping("/cliente/{id}")
+    public Cliente findById(@PathVariable Integer id){
+        return clienteService.findById(id);
+    }
+    @DeleteMapping("/eliminarcliente/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void eliminar(@PathVariable int id){
+        clienteService.delete(id);
+    }
+    @PutMapping("/editarcliente/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Cliente editar(@RequestBody Cliente cliente, @PathVariable Integer id){
+        Cliente  clienteactual=clienteService.findById(id);
+        clienteactual.setEdad(cliente.getEdad());
+
+
+
+        return clienteService.save(clienteactual);
+    }
+
 }
