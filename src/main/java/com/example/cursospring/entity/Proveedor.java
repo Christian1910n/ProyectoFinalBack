@@ -17,6 +17,7 @@ public class Proveedor{
     @Id
     @GeneratedValue
     private Integer id;
+
     @NonNull
     private String nombre_comercial;
 
@@ -25,6 +26,7 @@ public class Proveedor{
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cedula", referencedColumnName = "cedula")
     private Persona persona;
+
 
 
 

@@ -10,12 +10,14 @@ import lombok.RequiredArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 
+@Data
 @Entity
 @Table(name = "persona")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class Persona implements Serializable {
     @Id
-    @Column(name = "cedula")
+    @GeneratedValue
+    private Integer id;
+
     private String cedula;
 
     @NonNull
@@ -25,17 +27,14 @@ public class Persona implements Serializable {
     private String genero;
 
 
-
-
-
-    public Persona(String cedula, @NonNull String nombre, String apellido, String direccion, String genero) {
+    public Persona(Integer id, String cedula, @NonNull String nombre, String apellido, String direccion, String genero) {
+        this.id = id;
         this.cedula = cedula;
         this.nombre = nombre;
         this.apellido = apellido;
         this.direccion = direccion;
         this.genero = genero;
     }
-
 
     public Persona() {
 

@@ -45,6 +45,7 @@ public class ProveedorController {
     public Proveedor editar(@RequestBody Proveedor proveedor, @PathVariable Integer id){
         Proveedor proveedoractual=proveedorService.findById(id);
         proveedoractual.setNombre_comercial(proveedor.getNombre_comercial());
+        proveedoractual.setPersona(proveedor.getPersona());
         proveedoractual.setCelular(proveedor.getCelular());
 
 
