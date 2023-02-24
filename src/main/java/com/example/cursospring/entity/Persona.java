@@ -16,7 +16,6 @@ import java.io.Serializable;
 @RequiredArgsConstructor
 public class Persona implements Serializable {
     @Id
-    @GeneratedValue
     private String cedula;
 
     @NonNull
