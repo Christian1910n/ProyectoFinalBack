@@ -13,19 +13,14 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 public class Usuario {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id_usuarios", nullable = false)
+    @GeneratedValue
     private Integer id_usuarios;
-
-
-    private Persona persona;
     @NonNull
     private String usuario;
     private String contra;
 
     public Usuario(Integer id_usuarios, Persona persona, @NonNull String usuario, String contra) {
         this.id_usuarios = id_usuarios;
-        this.persona = persona;
         this.usuario = usuario;
         this.contra = contra;
     }

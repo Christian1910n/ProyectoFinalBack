@@ -14,11 +14,9 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 public class Inventario {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id_inventario", nullable = false)
+    @GeneratedValue
     private Integer id_inventario;
 
-    private Proveedor proveedor;
     @NonNull
     private String codigo;
     private String descripcion;
@@ -30,7 +28,6 @@ public class Inventario {
 
     public Inventario(Integer id_inventario, Proveedor proveedor, @NonNull String codigo, String descripcion, Integer cantidad, Double valor, String fecha_caducidad, String tipo, String imagen) {
         this.id_inventario = id_inventario;
-        this.proveedor = proveedor;
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.cantidad = cantidad;

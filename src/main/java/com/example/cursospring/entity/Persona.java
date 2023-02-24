@@ -1,21 +1,21 @@
 package com.example.cursospring.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Data
-@NoArgsConstructor
-@RequiredArgsConstructor
+@Table(name = "persona")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Persona implements Serializable {
     @Id
+    @Column(name = "cedula")
     private String cedula;
 
     @NonNull
@@ -24,6 +24,10 @@ public class Persona implements Serializable {
     private String direccion;
     private String genero;
 
+
+
+
+
     public Persona(String cedula, @NonNull String nombre, String apellido, String direccion, String genero) {
         this.cedula = cedula;
         this.nombre = nombre;
@@ -31,4 +35,13 @@ public class Persona implements Serializable {
         this.direccion = direccion;
         this.genero = genero;
     }
+
+
+    public Persona() {
+
+    }
+
+
+
+
 }

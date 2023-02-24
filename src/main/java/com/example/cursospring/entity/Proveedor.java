@@ -1,6 +1,7 @@
 package com.example.cursospring.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -12,22 +13,24 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class Proveedor extends Persona{
+public class Proveedor{
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "ruc_proveedor", nullable = false)
-    private Integer id_proveedor;
-
+    @GeneratedValue
+    private Integer id;
     @NonNull
     private String nombre_comercial;
 
     private String celular;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cedula", referencedColumnName = "cedula")
+    private Persona persona;
 
-    public Proveedor(String cedula, @NonNull String nombre, String apellido, String direccion, String genero, Integer id_proveedor, @NonNull String nombre_comercial, String celular) {
-        super(cedula, nombre, apellido, direccion, genero);
-        this.id_proveedor = id_proveedor;
+
+
+    public Proveedor(@NonNull String nombre_comercial, String celular, Persona persona) {
         this.nombre_comercial = nombre_comercial;
         this.celular = celular;
+        this.persona = persona;
     }
 }

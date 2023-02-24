@@ -14,17 +14,13 @@ import java.io.Serializable;
 @RequiredArgsConstructor
 public class Cliente implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id_cliente", nullable = false)
+    @GeneratedValue
     private Integer id_cliente;
-
-    private Persona persona;
     @NonNull
     private int edad;
 
     public Cliente(Integer id_cliente, Persona persona, @NonNull int edad) {
         this.id_cliente = id_cliente;
-        this.persona = persona;
         this.edad = edad;
     }
 }

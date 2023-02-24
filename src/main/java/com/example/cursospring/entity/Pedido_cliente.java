@@ -13,8 +13,7 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 public class Pedido_cliente {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "numero_pedido", nullable = false)
+    @GeneratedValue
     private Integer numero_pedido;
 
     @NonNull
@@ -22,12 +21,10 @@ public class Pedido_cliente {
 
     private String precio_total;
 
-    private Persona persona;
 
     public Pedido_cliente(Integer numero_pedido, @NonNull String fecha_pedido, String precio_total, Persona persona) {
         this.numero_pedido = numero_pedido;
         this.fecha_pedido = fecha_pedido;
         this.precio_total = precio_total;
-        this.persona = persona;
     }
 }

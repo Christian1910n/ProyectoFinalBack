@@ -16,7 +16,6 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
-
 public class Curso implements Serializable {
     @Id
     @GeneratedValue

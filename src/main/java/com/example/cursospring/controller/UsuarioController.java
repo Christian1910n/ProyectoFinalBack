@@ -54,7 +54,6 @@ public class UsuarioController {
 
         Usuario Actual = s3service.findById(id);
         Actual.setContra(usuario.getContra());
-        Actual.setPersona(usuario.getPersona());
 
         return s3service.save(Actual);
 
