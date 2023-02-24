@@ -31,4 +31,5 @@ public class Proveedor {
         this.nombre_comercial = nombre_comercial;
         this.celular = celular;
     }
+
 }

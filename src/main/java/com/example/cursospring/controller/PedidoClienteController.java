@@ -1,0 +1,40 @@
+package com.example.cursospring.controller;
+
+
+import com.example.cursospring.entity.Pedido_cliente;
+import com.example.cursospring.service.PedidoClienteService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@CrossOrigin(origins = {"http://localhost:4200"})
+@RestController
+@RequestMapping("/api")
+public class PedidoClienteController {
+    @Autowired
+    private PedidoClienteService pedidoClienteService;
+    @GetMapping("/listarpedidocliente")
+    public List<Pedido_cliente> indext(){
+        return pedidoClienteService.findAll();
+    }
+
+    @PostMapping("/crearpedidocliente")
+    public Pedido_cliente save(@RequestBody Pedido_cliente libro){
+        return pedidoClienteService.save(libro);
+    }
+
+    @GetMapping("/pedidocliente/{id}")
+    public Pedido_cliente findById(@PathVariable Integer id){
+        return pedidoClienteService.findById(id);
+    }
+
+    @DeleteMapping("/eliminarpedidocliente/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void eliminar(@PathVariable int id){
+        pedidoClienteService.delete(id);
+    }
+
+
+}
