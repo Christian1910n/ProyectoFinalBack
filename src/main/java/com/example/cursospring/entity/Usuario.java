@@ -17,13 +17,15 @@ public class Usuario {
     @Column(name = "id_usuarios", nullable = false)
     private Integer id_usuarios;
 
-    //private Persona persona
+
+    private Persona persona;
     @NonNull
     private String usuario;
     private String contra;
 
-    public Usuario(Integer id_usuarios, @NonNull String usuario, String contra) {
+    public Usuario(Integer id_usuarios, Persona persona, @NonNull String usuario, String contra) {
         this.id_usuarios = id_usuarios;
+        this.persona = persona;
         this.usuario = usuario;
         this.contra = contra;
     }
