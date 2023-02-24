@@ -15,13 +15,19 @@ public class Usuario {
     @Id
     @GeneratedValue
     private Integer id_usuarios;
+
     @NonNull
     private String usuario;
     private String contra;
 
-    public Usuario(Integer id_usuarios, Persona persona, @NonNull String usuario, String contra) {
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cedula", referencedColumnName = "cedula")
+    private Persona persona;
+
+    public Usuario(Integer id_usuarios, @NonNull String usuario, String contra, Persona persona) {
         this.id_usuarios = id_usuarios;
         this.usuario = usuario;
         this.contra = contra;
+        this.persona = persona;
     }
 }

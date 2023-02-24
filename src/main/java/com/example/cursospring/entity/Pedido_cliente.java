@@ -21,10 +21,15 @@ public class Pedido_cliente {
 
     private String precio_total;
 
+    @ManyToOne
+    @JoinColumn(name = "id_cliente")
+    private Cliente cliente;
 
-    public Pedido_cliente(Integer numero_pedido, @NonNull String fecha_pedido, String precio_total, Persona persona) {
+    public Pedido_cliente(Integer numero_pedido, @NonNull String fecha_pedido, String precio_total, Cliente cliente) {
         this.numero_pedido = numero_pedido;
         this.fecha_pedido = fecha_pedido;
         this.precio_total = precio_total;
+        this.cliente = cliente;
     }
+
 }
