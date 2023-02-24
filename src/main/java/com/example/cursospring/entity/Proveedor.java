@@ -8,6 +8,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -16,7 +17,7 @@ import javax.persistence.*;
 public class Proveedor{
     @Id
     @GeneratedValue
-    private Integer id;
+    private Integer id_proveedor;
 
     @NonNull
     private String nombre_comercial;
@@ -26,6 +27,14 @@ public class Proveedor{
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cedula", referencedColumnName = "cedula")
     private Persona persona;
+
+    @OneToMany(mappedBy = "proveedor")
+    @JsonIgnore
+    private List<Pedido_proveedor> pedidos;
+
+    @OneToMany(mappedBy = "proveedor")
+    @JsonIgnore
+    private List<Inventario> inventario;
 
 
 

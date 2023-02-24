@@ -67,4 +67,9 @@ public class InventarioController {
         return inventarioService.save(inventarioActual);
     }
 
+    @GetMapping("/tipo/{usuario}")
+    public List<Inventario> findByTipo(@PathVariable String usuario){
+        return inventarioRepository.findByTipo(usuario);
+    }
+
 }

@@ -17,6 +17,11 @@ public class Pedido_proveedor {
     private String fecha;
     private Double precio_total;
 
+    @ManyToOne
+    @JoinColumn(name = "id_proveedor")
+    private Proveedor proveedor;
+
+
     public Pedido_proveedor(Integer numero_pedido, String fecha, Double precio_total) {
         this.numero_pedido = numero_pedido;
         this.fecha = fecha;

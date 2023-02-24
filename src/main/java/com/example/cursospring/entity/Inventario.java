@@ -10,15 +10,12 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@NoArgsConstructor
 @RequiredArgsConstructor
 public class Inventario {
     @Id
     @GeneratedValue
-    private Integer id_inventario;
+    private Integer codigo;
 
-    @NonNull
-    private String codigo;
     private String descripcion;
     private Integer cantidad;
     private Double valor;
@@ -26,8 +23,11 @@ public class Inventario {
     private String tipo;
     private String imagen;
 
-    public Inventario(Integer id_inventario, Proveedor proveedor, @NonNull String codigo, String descripcion, Integer cantidad, Double valor, String fecha_caducidad, String tipo, String imagen) {
-        this.id_inventario = id_inventario;
+    @ManyToOne
+    @JoinColumn(name = "id_proveedor")
+    private Proveedor proveedor;
+
+    public Inventario(Integer codigo, String descripcion, Integer cantidad, Double valor, String fecha_caducidad, String tipo, String imagen, Proveedor proveedor) {
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.cantidad = cantidad;
@@ -35,5 +35,6 @@ public class Inventario {
         this.fecha_caducidad = fecha_caducidad;
         this.tipo = tipo;
         this.imagen = imagen;
+        this.proveedor = proveedor;
     }
 }
