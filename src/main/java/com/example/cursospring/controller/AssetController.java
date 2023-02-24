@@ -1,36 +1,36 @@
 package com.example.cursospring.controller;
 
+import com.example.cursospring.entity.Curso;
 import com.example.cursospring.entity.vm.Asset;
-import com.example.cursospring.service.UserServiceImp;
+import com.example.cursospring.service.CursoServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/api/assets")
+@CrossOrigin("http://localhost:3000")
 public class AssetController {
 
     @Autowired
-    private UserServiceImp s3Service;
+    private CursoServiceImp s3Service;
 
 
     //metodo para subir un archivo
     @PostMapping("/upload")
-   public Map<String, String > upload(@RequestParam MultipartFile foto, @RequestParam MultipartFile cedula){
+   public Map<String, String > upload(@RequestParam MultipartFile foto){
         String key = s3Service.putObject(foto);
-        String key2 = s3Service.putObject(cedula);
-
 
         Map<String, String> result=new HashMap<>();
         result.put("key", key);
-        result.put("key", key2);
         result.put("url", s3Service.getObjectUrl(key));
-        result.put("url", s3Service.getObjectUrl(key2));
 
         return result;
     }
@@ -47,11 +47,33 @@ public class AssetController {
                 .contentLength(asset.getContent().length)
                 .body(resource);
     }
+/*
+    @GetMapping(value = "/get-string")
+    public String string(){
+        return "Hola que hace";
+
+    }
+*/
+
+    @GetMapping(value = "/get-string")
+    public List curso(){
+        List <Curso>arrayList=new ArrayList<>();
+        Curso curso = new Curso(1,"admin","1234","adsr","asfasd");
+        arrayList.add(curso);
+        Curso cursos = new Curso(1,"admin","12345","adsr","asfasd");
+        arrayList.add(cursos);
+
+
+        return arrayList;
+
+    }
+
 
     //metodo para eliminar un objeto
     @DeleteMapping(value = "/delete-object", params = "key")
    public void eliminarObjeto(@RequestParam String key){
         s3Service.deleteObject(key);
+        System.out.println("Imagen eliminada");
     }
 
 }
