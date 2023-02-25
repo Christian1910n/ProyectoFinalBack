@@ -59,4 +59,26 @@ public class UsuarioController {
 
     }
 
+    @GetMapping("/validarLogin")
+    public boolean validarLogin(@RequestParam("usuario") String usuario, @RequestParam("contrasena")String clave){
+        if (s3service.validacionLogin(usuario,clave)){
+            return true;
+
+        }else {
+            System.out.println("No inicia");
+            return false;
+        }
+
+    }
+
+    @GetMapping("/validarusuario")
+    public boolean validarusuario(@RequestParam("usuario") String usuario){
+        Optional<Curso> per=cursoRepository.findByUsuario(usuario);
+        if(per.isPresent()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 }

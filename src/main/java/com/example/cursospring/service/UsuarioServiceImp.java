@@ -1,5 +1,6 @@
 package com.example.cursospring.service;
 
+import com.example.cursospring.entity.Curso;
 import com.example.cursospring.entity.Usuario;
 import com.example.cursospring.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ public class UsuarioServiceImp implements UsuarioService{
 
     @Autowired
     private UsuarioRepository userR;
+
 
 
     @Override
@@ -35,6 +37,14 @@ public class UsuarioServiceImp implements UsuarioService{
     @Override
     public void deleteById(Integer id) {
         userR.deleteById(id);
+    }
+
+    public boolean validacionLogin(String usuario, String contrasena) {
+        Optional<Curso> per=userR.findByUsuario(usuario);
+        if(per.isPresent() && per.get().getContrasena().equals(contrasena)){
+            return true;
+        }
+        return false;
     }
 
 }
