@@ -1,18 +1,22 @@
 package com.example.cursospring.controller;
 
+import com.example.cursospring.entity.Persona;
+import com.example.cursospring.repository.PersonaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/persona")
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin(origins = {"*"})
 public class PersonaController {
-    /*
-    @Autowired
-    private PersonaRepository cursoRepository;
 
     @Autowired
-    private PersonaServiceImp*/
+    PersonaRepository personadao;
+
+    @GetMapping("/cliente/{cedula}")
+    public Optional<Persona> findByCedula(@PathVariable String cedula){
+        return personadao.findByCedula(cedula);
+    }
 }

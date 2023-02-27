@@ -1,20 +1,26 @@
 package com.example.cursospring.controller;
 
 import com.example.cursospring.entity.Cliente;
-import com.example.cursospring.entity.Proveedor;
+import com.example.cursospring.entity.Persona;
+import com.example.cursospring.repository.ClienteRepository;
+import com.example.cursospring.repository.PersonaRepository;
 import com.example.cursospring.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = {"*"})
 @RestController
 @RequestMapping("/api")
 public class ClienteController {
 @Autowired
-    private ClienteService clienteService;
+private ClienteService clienteService;
+
+ClienteRepository clienteRepository;
+PersonaRepository personaRepository;
 @GetMapping("/listarcliente")
     public List<Cliente> indext(){
     return clienteService.findAll();
@@ -43,5 +49,12 @@ public class ClienteController {
 
         return clienteService.save(clienteactual);
     }
+
+    @GetMapping("/clienteced/{ced}")
+    public Optional<Cliente> clientecedula(@PathVariable String ced) {
+        return clienteService.buscarporcedula(ced);
+    }
+
+
 
 }
