@@ -39,9 +39,14 @@ public class UsuarioServiceImp implements UsuarioService{
         userR.deleteById(id);
     }
 
+    @Override
+    public Optional<Usuario> findByUsuario(String usuario) {
+        return Optional.empty();
+    }
+
     public boolean validacionLogin(String usuario, String contrasena) {
-        Optional<Curso> per=userR.findByUsuario(usuario);
-        if(per.isPresent() && per.get().getContrasena().equals(contrasena)){
+        Optional<Usuario> per=userR.findByUsuario(usuario);
+        if(per.isPresent() && per.get().getContra().equals(contrasena)){
             return true;
         }
         return false;

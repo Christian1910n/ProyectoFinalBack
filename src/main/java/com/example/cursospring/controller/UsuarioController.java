@@ -73,7 +73,7 @@ public class UsuarioController {
 
     @GetMapping("/validarusuario")
     public boolean validarusuario(@RequestParam("usuario") String usuario){
-        Optional<Curso> per=cursoRepository.findByUsuario(usuario);
+        Optional<Usuario> per=s3service.findByUsuario(usuario);
         if(per.isPresent()){
             return true;
         }else{
