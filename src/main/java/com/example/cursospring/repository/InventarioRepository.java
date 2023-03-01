@@ -10,4 +10,5 @@ import java.util.Optional;
 @Repository
 public interface InventarioRepository extends JpaRepository<Inventario, Integer> {
     List<Inventario> findByTipo(String tipo);
+    Inventario findByCodigo(Integer tipo);
 }

@@ -72,4 +72,19 @@ public class InventarioController {
         return inventarioRepository.findByTipo(usuario);
     }
 
+    @GetMapping("/producto/{codigo}")
+    public Inventario findByid (@PathVariable Integer codigo){
+        return  inventarioRepository.findByCodigo(codigo);
+    }
+
+    @PutMapping("/editarcantidad")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Inventario editarcantidad(@RequestParam("id") Integer id, @RequestParam("cantidad")Integer cantidad){
+        Inventario inventarioActual=inventarioRepository.findByCodigo(id);
+
+        inventarioActual.setCantidad(inventarioActual.getCantidad()-cantidad);
+
+        return s3service.save(inventarioActual);
+    }
+
 }
