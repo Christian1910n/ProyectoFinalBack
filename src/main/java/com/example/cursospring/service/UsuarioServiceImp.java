@@ -52,4 +52,13 @@ public class UsuarioServiceImp implements UsuarioService{
         return false;
     }
 
+    public boolean esAdministrador(String usuario) {
+        Optional<Usuario> usuarioOptional = userR.findByUsuario(usuario);
+        if (usuarioOptional.isPresent()) {
+            Usuario usuarioEncontrado = usuarioOptional.get();
+            return usuarioEncontrado.getUsuario().equals("administrador");
+        }
+        return false;
+    }
+
 }

@@ -70,6 +70,11 @@ public class UsuarioController {
         }
 
     }
+    @GetMapping("/esAdministrador")
+    public boolean esAdministrador(@RequestParam("usuario") String usuario) {
+        return s3service.esAdministrador(usuario);
+    }
+
 
     @GetMapping("/validarusuario")
     public boolean validarusuario(@RequestParam("usuario") String usuario){
