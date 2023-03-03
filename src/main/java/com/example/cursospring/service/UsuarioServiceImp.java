@@ -4,8 +4,15 @@ import com.example.cursospring.entity.Curso;
 import com.example.cursospring.entity.Usuario;
 import com.example.cursospring.repository.UsuarioRepository;
 import com.example.cursospring.security.dto.CreateUserDto;
+import com.example.cursospring.security.dto.JwtTokenDto;
+import com.example.cursospring.security.dto.LoginUserDto;
 import com.example.cursospring.security.enums.RoleEnum;
+import com.example.cursospring.security.jwt.JwtProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +30,12 @@ public class UsuarioServiceImp implements UsuarioService{
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    JwtProvider jwtProvider;
+
+    @Autowired
+    AuthenticationManager authenticationManager;
 
 
 
@@ -72,6 +85,15 @@ public class UsuarioServiceImp implements UsuarioService{
             return usuarioEncontrado.getUsuario().equals("administrador");
         }
         return false;
+    }
+
+    public JwtTokenDto login(LoginUserDto dto){
+        Authentication authentication=
+                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getUsuario(),dto.getContra()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String token=jwtProvider.generatedToken(authentication);
+        return new JwtTokenDto(token);
+
     }
 
 }

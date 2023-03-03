@@ -11,6 +11,7 @@ import com.example.cursospring.service.InventarioService;
 import com.example.cursospring.service.InventarioServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -77,6 +78,8 @@ public class InventarioController {
         return  inventarioRepository.findByCodigo(codigo);
     }
 
+
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER')")
     @PutMapping("/editarcantidad")
     @ResponseStatus(HttpStatus.CREATED)
     public Inventario editarcantidad(@RequestParam("id") Integer id, @RequestParam("cantidad")Integer cantidad){

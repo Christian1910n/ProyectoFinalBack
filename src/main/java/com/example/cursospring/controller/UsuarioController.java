@@ -5,6 +5,8 @@ import com.example.cursospring.entity.Usuario;
 import com.example.cursospring.repository.CursoRepository;
 import com.example.cursospring.repository.UsuarioRepository;
 import com.example.cursospring.security.dto.CreateUserDto;
+import com.example.cursospring.security.dto.JwtTokenDto;
+import com.example.cursospring.security.dto.LoginUserDto;
 import com.example.cursospring.service.CursoService;
 import com.example.cursospring.service.CursoServiceImp;
 import com.example.cursospring.service.UsuarioServiceImp;
@@ -12,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.AttributeException;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -88,6 +92,13 @@ public class UsuarioController {
         }else{
             return false;
         }
+    }
+
+    @PostMapping("/login")
+    public JwtTokenDto login (@Valid @RequestBody LoginUserDto dto){
+        JwtTokenDto jwtTokenDto =s3service.login(dto);
+        return jwtTokenDto;
+
     }
 
 }

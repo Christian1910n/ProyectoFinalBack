@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.FetchMode;
+import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import java.util.List;
