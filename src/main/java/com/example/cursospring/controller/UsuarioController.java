@@ -4,6 +4,7 @@ import com.example.cursospring.entity.Curso;
 import com.example.cursospring.entity.Usuario;
 import com.example.cursospring.repository.CursoRepository;
 import com.example.cursospring.repository.UsuarioRepository;
+import com.example.cursospring.security.dto.CreateUserDto;
 import com.example.cursospring.service.CursoService;
 import com.example.cursospring.service.CursoServiceImp;
 import com.example.cursospring.service.UsuarioServiceImp;
@@ -34,9 +35,9 @@ public class UsuarioController {
     //Crear
     @PostMapping("/crearusuario")
     @ResponseStatus(HttpStatus.CREATED)
-    Usuario create(@RequestBody Usuario user){
-        cursoRepository.save(user);
-        return  user;
+    Usuario create(@RequestBody CreateUserDto user){
+
+        return  s3service.save(user);
     }
 
 
@@ -48,6 +49,7 @@ public class UsuarioController {
     }
 
 
+    /*
     @PutMapping("/modificausuario/{id}")
     @ResponseStatus (HttpStatus.CREATED)
     public Usuario update(@RequestBody Usuario usuario , @PathVariable int id) {
@@ -58,6 +60,8 @@ public class UsuarioController {
         return s3service.save(Actual);
 
     }
+
+     */
 
     @GetMapping("/validarLogin")
     public boolean validarLogin(@RequestParam("usuario") String usuario, @RequestParam("contrasena")String clave){

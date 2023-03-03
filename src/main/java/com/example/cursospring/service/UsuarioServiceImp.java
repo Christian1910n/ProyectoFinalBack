@@ -3,11 +3,16 @@ package com.example.cursospring.service;
 import com.example.cursospring.entity.Curso;
 import com.example.cursospring.entity.Usuario;
 import com.example.cursospring.repository.UsuarioRepository;
+import com.example.cursospring.security.dto.CreateUserDto;
+import com.example.cursospring.security.enums.RoleEnum;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UsuarioServiceImp implements UsuarioService{
@@ -15,6 +20,9 @@ public class UsuarioServiceImp implements UsuarioService{
 
     @Autowired
     private UsuarioRepository userR;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
 
 
@@ -30,8 +38,13 @@ public class UsuarioServiceImp implements UsuarioService{
     }
 
     @Override
-    public Usuario save(Usuario user) {
-        return userR.save(user);
+    public Usuario save(CreateUserDto user){
+
+        String password=passwordEncoder.encode(user.getContra());
+        List<RoleEnum> roles = user.getRoles().stream().map(rol -> RoleEnum.valueOf(rol)).collect(Collectors.toList());
+        Usuario usuario = new Usuario(0, user.getUsuario(), password, user.getPersona(), roles);
+        return userR.save(usuario);
+
     }
 
     @Override
