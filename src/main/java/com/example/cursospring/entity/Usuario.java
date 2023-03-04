@@ -28,15 +28,12 @@ public class Usuario {
     @JoinColumn(name = "cedula", referencedColumnName = "cedula")
     private Persona persona;
 
-    @ElementCollection
-    @Enumerated(EnumType.STRING)
-    List<RoleEnum> roles;
 
-    public Usuario(Integer id_usuarios, @NonNull String usuario, String contra, Persona persona, List<RoleEnum> roles) {
+
+    public Usuario(Integer id_usuarios, @NonNull String usuario, String contra, Persona persona) {
         this.id_usuarios = id_usuarios;
         this.usuario = usuario;
         this.contra = contra;
         this.persona = persona;
-        this.roles = roles;
     }
 }

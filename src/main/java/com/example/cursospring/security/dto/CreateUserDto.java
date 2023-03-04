@@ -15,17 +15,15 @@ public class CreateUserDto {
     @NotEmpty(message = "Persona es obligatorio")
     private Persona persona;
 
-    @NotEmpty(message = "Rol es obligatorio")
-    List<String> roles;
+
 
     public CreateUserDto() {
     }
 
-    public CreateUserDto(String usuario, String contra, Persona persona, List<String> roles) {
+    public CreateUserDto(String usuario, String contra, Persona persona) {
         this.usuario = usuario;
         this.contra = contra;
         this.persona = persona;
-        this.roles = roles;
     }
 
     public String getUsuario() {
@@ -52,11 +50,5 @@ public class CreateUserDto {
         this.persona = persona;
     }
 
-    public List<String> getRoles() {
-        return roles;
-    }
 
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
-    }
 }

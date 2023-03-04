@@ -34,7 +34,6 @@ public class JwtProvider {
                 .setSubject(userPrincipal.getUsername())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(new Date().getTime() + expiration * 1000))
-                .claim("roles", getRoles(userPrincipal))
                 .claim("cara", "feísima")
                 .compact();
 
@@ -63,10 +62,7 @@ public class JwtProvider {
         return false;
     }
 
-    private List<String> getRoles(UserPrincipal principal) {
-        return principal.getAuthorities()
-                .stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
-    }
+
 
     private Key getKey(String secret){
         byte [] secretBytes = Decoders.BASE64URL.decode(secret);

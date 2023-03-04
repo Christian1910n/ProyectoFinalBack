@@ -54,8 +54,7 @@ public class UsuarioServiceImp implements UsuarioService{
     public Usuario save(CreateUserDto user){
 
         String password=passwordEncoder.encode(user.getContra());
-        List<RoleEnum> roles = user.getRoles().stream().map(rol -> RoleEnum.valueOf(rol)).collect(Collectors.toList());
-        Usuario usuario = new Usuario(0, user.getUsuario(), password, user.getPersona(), roles);
+        Usuario usuario = new Usuario(0, user.getUsuario(), password, user.getPersona());
         return userR.save(usuario);
 
     }

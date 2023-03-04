@@ -14,24 +14,22 @@ public class UserPrincipal implements UserDetails {
     private String usuario;
     private String contra;
     private Persona persona;
-    private Collection<? extends GrantedAuthority>authorities;
 
-    public UserPrincipal(String usuario, String contra, Persona persona, Collection<? extends GrantedAuthority> authorities) {
+    public UserPrincipal(String usuario, String contra, Persona persona ) {
         this.usuario = usuario;
         this.contra = contra;
         this.persona = persona;
-        this.authorities = authorities;
     }
 
     public static UserPrincipal build(Usuario usuario){
-        Collection<GrantedAuthority>authorities=
-                usuario.getRoles().stream().map(rol->new SimpleGrantedAuthority(rol.name())).collect(Collectors.toList());
-        return new UserPrincipal(usuario.getUsuario(), usuario.getContra(), usuario.getPersona(),authorities);
+
+        return new UserPrincipal(usuario.getUsuario(), usuario.getContra(), usuario.getPersona());
     }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+        return null;
     }
 
     @Override
