@@ -15,7 +15,7 @@ public class Inventario {
     @Id
     @GeneratedValue
     private Integer codigo;
-
+    private String nombre;
     private String descripcion;
     private Integer cantidad;
     private Double valor;
@@ -27,8 +27,9 @@ public class Inventario {
     @JoinColumn(name = "id_proveedor")
     private Proveedor proveedor;
 
-    public Inventario(Integer codigo, String descripcion, Integer cantidad, Double valor, String fecha_caducidad, String tipo, String imagen, Proveedor proveedor) {
+    public Inventario(Integer codigo, String nombre, String descripcion, Integer cantidad, Double valor, String fecha_caducidad, String tipo, String imagen, Proveedor proveedor) {
         this.codigo = codigo;
+        this.nombre = nombre;
         this.descripcion = descripcion;
         this.cantidad = cantidad;
         this.valor = valor;
