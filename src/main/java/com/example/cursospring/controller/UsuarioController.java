@@ -1,24 +1,18 @@
 package com.example.cursospring.controller;
 
-import com.example.cursospring.entity.Curso;
 import com.example.cursospring.entity.Usuario;
-import com.example.cursospring.repository.CursoRepository;
 import com.example.cursospring.repository.UsuarioRepository;
 import com.example.cursospring.security.dto.CreateUserDto;
 import com.example.cursospring.security.dto.JwtTokenDto;
 import com.example.cursospring.security.dto.LoginUserDto;
-import com.example.cursospring.service.CursoService;
-import com.example.cursospring.service.CursoServiceImp;
 import com.example.cursospring.service.UsuarioServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.print.AttributeException;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -53,19 +47,24 @@ public class UsuarioController {
     }
 
 
-    /*
+
     @PutMapping("/modificausuario/{id}")
     @ResponseStatus (HttpStatus.CREATED)
-    public Usuario update(@RequestBody Usuario usuario , @PathVariable int id) {
+    public Usuario update(@RequestBody CreateUserDto usuario , @PathVariable int id) {
 
         Usuario Actual = s3service.findById(id);
-        Actual.setContra(usuario.getContra());
 
-        return s3service.save(Actual);
+
+        Actual.setContra(usuario.getContra());
+        Actual.setUsuario(usuario.getUsuario());
+        Actual.setPersona(usuario.getPersona());
+
+
+        return s3service.saveuser(Actual);
 
     }
 
-     */
+
 
     @GetMapping("/validarLogin")
     public boolean validarLogin(@RequestParam("usuario") String usuario, @RequestParam("contrasena")String clave){
@@ -99,6 +98,11 @@ public class UsuarioController {
         JwtTokenDto jwtTokenDto =s3service.login(dto);
         return jwtTokenDto;
 
+    }
+
+    @GetMapping("/getusuario/{id}")
+    Optional<Usuario> getUserById(@PathVariable String id) {
+        return s3service.findByUsuario(id);
     }
 
 }

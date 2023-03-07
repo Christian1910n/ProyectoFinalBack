@@ -37,6 +37,9 @@ public class UsuarioServiceImp implements UsuarioService{
     @Autowired
     AuthenticationManager authenticationManager;
 
+    @Autowired
+    UsuarioRepository usuariodao;
+
 
 
     @Override
@@ -60,13 +63,20 @@ public class UsuarioServiceImp implements UsuarioService{
     }
 
     @Override
+    public Usuario saveuser(Usuario user) {
+        String password=passwordEncoder.encode(user.getContra());
+        user.setContra(password);
+        return userR.save(user);
+    }
+
+    @Override
     public void deleteById(Integer id) {
         userR.deleteById(id);
     }
 
     @Override
     public Optional<Usuario> findByUsuario(String usuario) {
-        return Optional.empty();
+        return usuariodao.findByUsuario(usuario);
     }
 
     public boolean validacionLogin(String usuario, String contrasena) {
