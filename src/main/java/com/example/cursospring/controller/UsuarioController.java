@@ -50,9 +50,9 @@ public class UsuarioController {
 
     @PutMapping("/modificausuario/{id}")
     @ResponseStatus (HttpStatus.CREATED)
-    public Usuario update(@RequestBody CreateUserDto usuario , @PathVariable int id) {
+    public Usuario update(@RequestBody CreateUserDto usuario , @PathVariable String id) {
 
-        Usuario Actual = s3service.findById(id);
+        Usuario Actual = s3service.findByUsuario(id).get();
 
 
         Actual.setContra(usuario.getContra());
