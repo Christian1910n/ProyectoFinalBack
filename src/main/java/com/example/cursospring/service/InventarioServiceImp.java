@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.print.Pageable;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -56,6 +57,11 @@ public class InventarioServiceImp implements InventarioService{
     @Override
     public void deleteById(Integer id) {
         userR.deleteById(id);
+    }
+
+    @Override
+    public List<Inventario> findAllByNombreLike(String titulo) {
+        return userR.findAllByNombreContaining(titulo);
     }
 
 

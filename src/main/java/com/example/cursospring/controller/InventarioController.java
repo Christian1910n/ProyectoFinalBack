@@ -90,4 +90,9 @@ public class InventarioController {
         return s3service.save(inventarioActual);
     }
 
+    @GetMapping("/nombre/{titulo}")
+    public List<Inventario> inventariosxnombre(@PathVariable String titulo){
+        return s3service.findAllByNombreLike(titulo);
+    }
+
 }
