@@ -33,4 +33,8 @@ public class ProveedorServiceImp implements ProveedorService {
     public void delete(Integer id) {
         proveedorRepository.deleteById(id);
     }
+    @Override
+    public void deleteById(Integer id) {
+        proveedorRepository.deleteById(id);
+    }
 }

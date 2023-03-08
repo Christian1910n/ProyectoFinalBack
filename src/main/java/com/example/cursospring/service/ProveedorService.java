@@ -12,6 +12,7 @@ public interface ProveedorService {
     public Proveedor  save(Proveedor c);
 
     public Proveedor findById(Integer id);
+    public void deleteById(Integer id);
 
     public void delete(Integer id);
 }

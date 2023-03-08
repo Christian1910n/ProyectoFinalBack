@@ -5,11 +5,13 @@ import com.example.cursospring.entity.Pedido_cliente;
 import com.example.cursospring.entity.Proveedor;
 import com.example.cursospring.service.PedidoClienteService;
 import com.example.cursospring.service.ProveedorService;
+import com.example.cursospring.service.ProveedorServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -18,26 +20,41 @@ import java.util.List;
 public class ProveedorController {
 
     @Autowired
-    private ProveedorService proveedorService;
+    private ProveedorServiceImp proveedorService;
     @GetMapping("/listarproveedor")
-    public List<Proveedor> indext(){
-        return proveedorService.findAll();
+    public List<Proveedor> indext() {
+        List<Proveedor> listaProveedores = proveedorService.findAll(); // obtiene la lista completa de proveedores
+        List<Proveedor> listaProveedoresActivos = listaProveedores
+                .stream() // convierte la lista en un flujo
+                .filter(p ->p.isEstado()) // filtra solo los proveedores cuyo estado es true
+                .collect(Collectors.toList()); // convierte el flujo filtrado en una lista
+        return listaProveedoresActivos; // retorna la lista filtrada
     }
 
+
     @PostMapping("/crearproveedor")
+    @ResponseStatus(HttpStatus.CREATED)
     public Proveedor save(@RequestBody Proveedor libro){
         return proveedorService.save(libro);
     }
 
-    @GetMapping("/proveedor/{id}")
+    @GetMapping("/proveedorid/{id}")
     public Proveedor findById(@PathVariable Integer id){
         return proveedorService.findById(id);
     }
 
-    @DeleteMapping("/eliminarproveedor/{id}")
+
+    @PutMapping("/eliminarproveedor")
     @ResponseStatus(HttpStatus.CREATED)
-    public void eliminar(@PathVariable int id){
-        proveedorService.delete(id);
+    public String delete(@RequestParam("id") int id) {
+        Proveedor p=proveedorService.findById(id);
+        if(p.isEstado()==true){
+            p.setEstado(false);
+        }else{
+            p.setEstado(true);
+        }
+        proveedorService.save(p);
+        return "Id: "+ id+ " Eliminado correctamente";
     }
 
     @PutMapping("/editarproveedor/{id}")

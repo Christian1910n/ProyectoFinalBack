@@ -24,6 +24,8 @@ public class Proveedor{
 
     private String celular;
 
+    private boolean estado;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cedula", referencedColumnName = "cedula")
     private Persona persona;
@@ -37,11 +39,11 @@ public class Proveedor{
     private List<Inventario> inventario;
 
 
-
-
-    public Proveedor(@NonNull String nombre_comercial, String celular, Persona persona) {
+    public Proveedor(Integer id_proveedor, @NonNull String nombre_comercial, String celular, boolean estado, Persona persona) {
+        this.id_proveedor = id_proveedor;
         this.nombre_comercial = nombre_comercial;
         this.celular = celular;
+        this.estado = estado;
         this.persona = persona;
     }
 }
