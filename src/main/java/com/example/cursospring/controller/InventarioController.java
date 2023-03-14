@@ -74,8 +74,18 @@ public class InventarioController {
     }
 
     @GetMapping("/producto/{codigo}")
-    public Inventario findByid (@PathVariable Integer codigo){
-        return  inventarioRepository.findByCodigo(codigo);
+    public Inventario findBy(@PathVariable String codigo){
+        Integer codigoInt;
+        System.out.println(codigo);
+        try {
+            codigoInt = Integer.parseInt(codigo);
+            System.out.println("Buscar por codigo");
+            return inventarioRepository.findFirstByCodigoOrNombre(codigoInt, null);
+
+        } catch (NumberFormatException e) {
+            System.out.println("Buscar por nombre");
+            return inventarioRepository.findFirstByCodigoOrNombre(null, codigo);
+        }
     }
 
 

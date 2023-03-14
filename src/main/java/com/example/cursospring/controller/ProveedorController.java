@@ -1,6 +1,7 @@
 package com.example.cursospring.controller;
 
 
+import com.example.cursospring.entity.Cliente;
 import com.example.cursospring.entity.Pedido_cliente;
 import com.example.cursospring.entity.Proveedor;
 import com.example.cursospring.service.PedidoClienteService;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -67,5 +69,10 @@ public class ProveedorController {
 
 
         return proveedorService.save(proveedoractual);
+    }
+
+    @GetMapping("/proveedorced/{ced}")
+    public Optional<Proveedor> proveedorcedula(@PathVariable String ced) {
+        return proveedorService.buscarporcedula(ced);
     }
 }
