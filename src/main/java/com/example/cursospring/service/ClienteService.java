@@ -1,6 +1,7 @@
 package com.example.cursospring.service;
 
 import com.example.cursospring.entity.Cliente;
+import com.example.cursospring.entity.Persona;
 import com.example.cursospring.entity.Proveedor;
 
 import java.util.List;
@@ -8,6 +9,8 @@ import java.util.Optional;
 
 public interface ClienteService {
     public List<Cliente> findAll();
+
+    public Optional<Persona> findAllPersona(String cedula);
 
     public Cliente  save(Cliente c);
 

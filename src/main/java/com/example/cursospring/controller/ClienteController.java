@@ -2,14 +2,11 @@ package com.example.cursospring.controller;
 
 import com.example.cursospring.entity.Cliente;
 import com.example.cursospring.entity.Persona;
-import com.example.cursospring.entity.Proveedor;
 import com.example.cursospring.repository.ClienteRepository;
 import com.example.cursospring.repository.PersonaRepository;
 import com.example.cursospring.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,7 +33,20 @@ PersonaRepository personaRepository;
 }
     @PostMapping("/crearcliente")
     public Cliente save(@RequestBody Cliente libro){
+    Optional<Persona> p=clienteService.findAllPersona(libro.getPersona().getCedula());
+    if(p.isPresent()) {
+        System.out.println("Cedula duplicada");
+        return null;
+
+    }else{
+        System.out.println("else null");
         return clienteService.save(libro);
+    }
+    }
+
+    @GetMapping("/getpersonas/{cedula}")
+    public Optional<Persona> getper(@PathVariable String cedula){
+        return clienteService.findAllPersona(cedula);
     }
 
     @GetMapping("/cliente/{id}")

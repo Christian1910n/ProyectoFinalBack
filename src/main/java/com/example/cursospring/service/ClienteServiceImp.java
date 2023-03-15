@@ -26,6 +26,12 @@ public class ClienteServiceImp implements ClienteService{
     }
 
     @Override
+    public Optional<Persona> findAllPersona(String cedula) {
+        return personaDao.findByCedula(cedula);
+    }
+
+
+    @Override
     public Cliente save(Cliente c) {
         return clienteRepository.save(c);
     }
