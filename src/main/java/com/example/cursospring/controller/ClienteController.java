@@ -2,6 +2,7 @@ package com.example.cursospring.controller;
 
 import com.example.cursospring.entity.Cliente;
 import com.example.cursospring.entity.Persona;
+import com.example.cursospring.entity.Proveedor;
 import com.example.cursospring.repository.ClienteRepository;
 import com.example.cursospring.repository.PersonaRepository;
 import com.example.cursospring.service.ClienteService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = {"*"})
 @RestController
@@ -25,7 +27,12 @@ ClienteRepository clienteRepository;
 PersonaRepository personaRepository;
 @GetMapping("/listarcliente")
     public List<Cliente> indext(){
-    return clienteService.findAll();
+    List<Cliente> listaclientes = clienteService.findAll(); // obtiene la lista completa de proveedores
+    List<Cliente> listaClientesact = listaclientes
+            .stream() // convierte la lista en un flujo
+            .filter(p ->p.isEstado()) // filtra solo los proveedores cuyo estado es true
+            .collect(Collectors.toList()); // convierte el flujo filtrado en una lista
+    return listaClientesact; // retorna la lista filtrada
 }
     @PostMapping("/crearcliente")
     public Cliente save(@RequestBody Cliente libro){
@@ -36,11 +43,7 @@ PersonaRepository personaRepository;
     public Cliente findById(@PathVariable Integer id){
         return clienteService.findById(id);
     }
-    @DeleteMapping("/eliminarcliente/{id}")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void eliminar(@PathVariable int id){
-        clienteService.delete(id);
-    }
+
     @PutMapping("/editarcliente/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public Cliente editar(@RequestBody Cliente cliente, @PathVariable Integer id){
@@ -52,6 +55,18 @@ PersonaRepository personaRepository;
         return clienteService.save(clienteactual);
     }
 
+    @PutMapping("/eliminarcliente")
+    @ResponseStatus(HttpStatus.CREATED)
+    public String delete(@RequestParam("id") int id) {
+        Cliente p=clienteService.findById(id);
+        if(p.isEstado()==true){
+            p.setEstado(false);
+        }else{
+            p.setEstado(true);
+        }
+        clienteService.save(p);
+        return "Id: "+ id+ " Eliminado correctamente";
+    }
 
 
     @GetMapping("/clienteced/{ced}")

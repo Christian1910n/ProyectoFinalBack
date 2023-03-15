@@ -26,16 +26,17 @@ public class Cliente implements Serializable {
     @JoinColumn(name = "cedula", referencedColumnName = "cedula")
     private Persona persona;
 
+    private boolean estado;
+
     @OneToMany(mappedBy = "cliente")
     @JsonIgnore
     private List<Pedido_cliente> pedidos;
 
-    public Cliente(Integer id_cliente, @NonNull int edad, Persona persona, List<Pedido_cliente> pedidos) {
+    public Cliente(Integer id_cliente, @NonNull int edad, Persona persona, boolean estado, List<Pedido_cliente> pedidos) {
         this.id_cliente = id_cliente;
         this.edad = edad;
         this.persona = persona;
+        this.estado = estado;
         this.pedidos = pedidos;
     }
-
-
 }
