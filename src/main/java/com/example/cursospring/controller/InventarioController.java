@@ -47,12 +47,7 @@ public class InventarioController {
     }
 
     //
-    @DeleteMapping("/eliminarinventario")
-    @ResponseStatus(HttpStatus.CREATED)
-    public String delete(@RequestParam("id") int id) {
-        s3service.deleteById(id);
-        return "Id: "+ id+ " Eliminado correctamente";
-    }
+
 
     @PutMapping("/editarinventario/{id}")
     @ResponseStatus(HttpStatus.CREATED)

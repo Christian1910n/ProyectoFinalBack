@@ -66,21 +66,6 @@ public class UsuarioController {
 
 
 
-    @GetMapping("/validarLogin")
-    public boolean validarLogin(@RequestParam("usuario") String usuario, @RequestParam("contrasena")String clave){
-        if (s3service.validacionLogin(usuario,clave)){
-            return true;
-
-        }else {
-            System.out.println("No inicia");
-            return false;
-        }
-
-    }
-    @GetMapping("/esAdministrador")
-    public boolean esAdministrador(@RequestParam("usuario") String usuario) {
-        return s3service.esAdministrador(usuario);
-    }
 
 
     @GetMapping("/validarusuario")
