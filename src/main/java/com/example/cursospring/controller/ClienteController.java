@@ -59,6 +59,7 @@ PersonaRepository personaRepository;
     public Cliente editar(@RequestBody Cliente cliente, @PathVariable Integer id){
         Cliente  clienteactual=clienteService.findById(id);
         clienteactual.setEdad(cliente.getEdad());
+        clienteactual.setPersona(cliente.getPersona());
 
 
 

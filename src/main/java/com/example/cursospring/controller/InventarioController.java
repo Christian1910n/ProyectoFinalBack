@@ -65,7 +65,15 @@ public class InventarioController {
 
     @GetMapping("/tipo/{usuario}")
     public List<Inventario> findByTipo(@PathVariable String usuario){
-        return inventarioRepository.findByTipo(usuario);
+        System.out.println(usuario);
+        if(usuario.equalsIgnoreCase("TODOS")){
+            System.out.println("todos");
+            return inventarioRepository.findAll();
+        }else{
+            System.out.println("tipo");
+            return inventarioRepository.findByTipo(usuario);
+        }
+
     }
 
     @GetMapping("/producto/{codigo}")
