@@ -40,8 +40,7 @@ public class MainSecurityConfig{
         http.authenticationManager(authenticationManager);
         http.csrf().disable();
         http.cors();
-        http.authorizeRequests().antMatchers("/**").permitAll().anyRequest().authenticated();
-        //http.authorizeRequests().antMatchers("/api/usuarios/**").permitAll().anyRequest().authenticated();
+        http.authorizeRequests().antMatchers("/api/usuarios/**").permitAll().anyRequest().authenticated();
         http.exceptionHandling().authenticationEntryPoint(jwtEntryPoint);
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
