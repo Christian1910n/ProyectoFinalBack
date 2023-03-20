@@ -35,7 +35,9 @@ public class InventarioController {
     //Listar
     @GetMapping("/listarinventario")
     List<Inventario> getAll(){
-        return  inventarioRepository.findAll();
+        return  inventarioRepository.findAll().stream()
+                .peek(inventario-> inventario.setImagen(s3service.getObjectUrl(inventario.getImagen())))
+                .collect(Collectors.toList());
     }
 
     //Crear
