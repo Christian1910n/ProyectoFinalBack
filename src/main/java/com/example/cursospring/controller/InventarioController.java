@@ -70,10 +70,14 @@ public class InventarioController {
         System.out.println(usuario);
         if(usuario.equalsIgnoreCase("TODOS")){
             System.out.println("todos");
-            return inventarioRepository.findAll();
+            return inventarioRepository.findAll().stream()
+                    .peek(inventario-> inventario.setImagen(s3service.getObjectUrl(inventario.getImagen())))
+                    .collect(Collectors.toList());
         }else{
             System.out.println("tipo");
-            return inventarioRepository.findByTipo(usuario);
+            return inventarioRepository.findByTipo(usuario).stream()
+                    .peek(inventario-> inventario.setImagen(s3service.getObjectUrl(inventario.getImagen())))
+                    .collect(Collectors.toList());
         }
 
     }
@@ -107,7 +111,9 @@ public class InventarioController {
 
     @GetMapping("/nombre/{titulo}")
     public List<Inventario> inventariosxnombre(@PathVariable String titulo){
-        return s3service.findAllByNombreLike(titulo);
+        return s3service.findAllByNombreLike(titulo).stream()
+                .peek(inventario-> inventario.setImagen(s3service.getObjectUrl(inventario.getImagen())))
+                .collect(Collectors.toList());
     }
 
 }
